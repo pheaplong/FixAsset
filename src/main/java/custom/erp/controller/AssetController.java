@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -103,7 +104,6 @@ public class AssetController {
 
 	@GetMapping("/assetinfos/{Id}")
 	public AssetInfo getAssetInfoById(@PathVariable int Id) {
-		System.out.println(Id);
 		return assetInfoService.findbyId(Id).get();
 	}
 
@@ -137,9 +137,14 @@ public class AssetController {
 
 	@GetMapping("/assetTransactions/{Id}")
 	public AssetTransaction getAssetTransactionById(@PathVariable int Id) {
-		return assetTransactionService.findbyId(Id).get();
+		return assetTransactionService.getById(Id);
 	}
 
+	@PostMapping("/assetTransactions")
+	public void insertAssetTransaction(@RequestBody AssetTransaction assetTransaction) {
+		assetTransactionService.insert(assetTransaction);
+	}
+	
 	@PutMapping("/assetTransactions/{Id}")
 	public void updateAssetTransaction(@RequestBody AssetTransaction assetTransaction) {
 		assetTransactionService.update(assetTransaction);

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import custom.erp.constant.AssetConstant;
 import custom.erp.entity.AssetInfo;
 import custom.erp.entity.AssetTransaction;
+import custom.erp.exception.ResourceNotFoundException;
 import custom.erp.repository.IAssetInfoRepository;
 
 @Service
@@ -41,6 +42,17 @@ public class AssetInfoService implements IserviceBase<AssetInfo> {
 	}
 
 	@Override
+	public AssetInfo getById(int Id) {
+		AssetInfo assetInfo;
+		try {
+			assetInfo = iAssetInfoRepository.findById(Id).get();
+		} catch (Exception e) {
+			throw new ResourceNotFoundException();
+		}
+		return assetInfo;
+	}
+
+	@Override
 	public void insert(AssetInfo AssetInfo) {
 		AssetInfo.setAssId(0);
 		iAssetInfoRepository.save(AssetInfo);
@@ -52,11 +64,6 @@ public class AssetInfoService implements IserviceBase<AssetInfo> {
 	}
 
 	@Override
-	public AssetInfo getById(int Id) {
-		return iAssetInfoRepository.getById(Id);
-	}
-
-	@Override
 	public AssetInfo update(AssetInfo AssetInfo) {
 		iAssetInfoRepository.save(AssetInfo);
 		return iAssetInfoRepository.getById(AssetInfo.getAssId());
@@ -65,13 +72,20 @@ public class AssetInfoService implements IserviceBase<AssetInfo> {
 	@Transactional
 	public void approveAsset(AssetInfo assetInfo) throws Exception {
 		AssetTransaction assetTransaction = new AssetTransaction();
-		iAssetInfoRepository.changeAssetStatus(assetInfo.getAssId(),AssetConstant.ASSET_STATUS_APPROVED,assetInfo.getApproveUsr());
 		assetTransaction.setAssId(assetInfo.getAssId());
 		assetTransaction.setApproveUsr(assetInfo.getApproveUsr());
+		
+		assetInfo=getById(assetInfo.getAssId());
+		assetInfo.isInRequestState();
+
+		iAssetInfoRepository.changeAssetStatus(assetInfo.getAssId(),AssetConstant.ASSET_STATUS_APPROVED,assetInfo.getApproveUsr());
 		assetTransactionService.insertWithApprove(assetTransaction);
 	}
 	@Transactional
-	public void rejectAsset(AssetInfo assetInfo) {
+	public void rejectAsset(AssetInfo assetInfo) throws Exception {
+		assetInfo=getById(assetInfo.getAssId());
+		assetInfo.isInRequestState();
+
 		iAssetInfoRepository.changeAssetStatus(assetInfo.getAssId(),AssetConstant.ASSET_STATUS_REJECTED,assetInfo.getApproveUsr());
 	}
 

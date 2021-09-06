@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import custom.erp.constant.AssetConstant;
+import custom.erp.exception.BussinessExceptionHandler;
+
 @Entity
 @Table(name = "HR_ASSET")
 public class AssetInfo {
@@ -487,5 +490,31 @@ public class AssetInfo {
 		this.approveDt = approveDt;
 	} 
 
+	public void isInRequestState() throws Exception {
+		if(!assStatus.equals(AssetConstant.ASSET_STATUS_REQUEST))
+			throw new BussinessExceptionHandler("Asset is Not in Request State");
+	}
+	public void isNotInRequestState() throws Exception {
+		if(assStatus.equals(AssetConstant.ASSET_STATUS_REQUEST))
+			throw new BussinessExceptionHandler("Asset is in Request State");
+	}
+
+	@Override
+	public String toString() {
+		return "AssetInfo [assId=" + assId + ", invoiceId=" + invoiceId + ", assOldCode=" + assOldCode + ", barcodeNo="
+				+ barcodeNo + ", nameEng=" + nameEng + ", nameKhr=" + nameKhr + ", serialNo=" + serialNo
+				+ ", modelName=" + modelName + ", descripttion=" + descripttion + ", engineNo=" + engineNo
+				+ ", chassiNo=" + chassiNo + ", conditionId=" + conditionId + ", assTypeId=" + assTypeId
+				+ ", assCategoryId=" + assCategoryId + ", ccy=" + ccy + ", netCost=" + netCost + ", tax=" + tax
+				+ ", costTotal=" + costTotal + ", costNbv=" + costNbv + ", isWarranty=" + isWarranty + ", wrtStDate="
+				+ wrtStDate + ", wrtToDate=" + wrtToDate + ", request=" + request + ", deprDuration=" + deprDuration
+				+ ", deprMethodId=" + deprMethodId + ", deprStDate=" + deprStDate + ", deprToDate=" + deprToDate
+				+ ", deprPercent=" + deprPercent + ", deprValue=" + deprValue + ", assCode1=" + assCode1 + ", assCode2="
+				+ assCode2 + ", assCode3=" + assCode3 + ", assCode4=" + assCode4 + ", ipAddress=" + ipAddress
+				+ ", brId=" + brId + ", ownerId=" + ownerId + ", assStatus=" + assStatus + ", insUsr=" + insUsr
+				+ ", insDt=" + insDt + ", updtUsr=" + updtUsr + ", updtDt=" + updtDt + ", approveUsr=" + approveUsr
+				+ ", approveDt=" + approveDt + "]";
+	}
+	
 	
 }

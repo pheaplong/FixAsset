@@ -1,0 +1,39 @@
+@hostname=http://localhost:8080/api
+GET {{hostname}}/Asset/assetinfos
+###
+
+GET {{hostname}}/Asset/assetinfos/1
+###
+
+//Approval
+PUT {{hostname}}/Asset/assetinfos/1/approval
+###
+
+//Reject
+DELETE  {{hostname}}/Asset/assetinfos/14/approval
+###
+
+//Asset Transaction
+GET {{hostname}}/Asset/assetTransactions
+###
+
+//Get One
+GET {{hostname}}/Asset/assetTransactions/20
+###
+
+//insert
+POST  {{hostname}}/Asset/assetTransactions
+Content-Type: application/json
+
+{
+	"trnType":"200",
+	"assId":"1",
+	"brId":"A04000002",
+	"baseDate":"20210903",
+	"trnType":"A03000002"
+
+}
+###
+
+//approv
+PUT  {{hostname}}/Asset/assetTransactions/177/approval
