@@ -1,14 +1,18 @@
 package custom.erp.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.type.TrueFalseType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import com.sun.istack.Nullable;
 
 import custom.erp.entity.AssetTransaction;
 
@@ -70,4 +74,10 @@ public interface IAssetTransactionRepository extends JpaRepository<AssetTransact
 					+ "			TO_CHAR(SYSDATE,'YYYYMMDD'))"
 			)
 	public void insertWithApprove(@Param("ASSID") int assId,@Param("APPROVEUSR") String approveUsr) ;
+	
+//	@Query(nativeQuery = true,
+//			value = "SELECT * FROM HR_ASSET_TRN WHERE :ASSID IS NULL OR ASS_ID=TO_NUMBER(:ASSID)")
+	@Query(nativeQuery = true,
+			value = "SELECT * FROM HR_ASSET_TRN WHERE ASS_ID=NVL(to_number(:ASSID),ASS_ID)")
+	List<AssetTransaction> findAll(@Param("ASSID") @Nullable Optional<Integer> assID);
 }

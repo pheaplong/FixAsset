@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import custom.erp.constant.AssetConstant;
 import custom.erp.entity.AssetInfo;
@@ -17,7 +18,7 @@ import custom.erp.repository.IAssetTransactionRepository;
 import custom.erp.util.GlobalLibrary;
 
 @Service
-public class AssetTransactionService implements IserviceBase<AssetTransaction> {
+public class AssetTransactionService {
 
 	private IAssetTransactionRepository iAssetTransactionRepository;
 	private DataLookUpService dataLookUpService;
@@ -38,18 +39,18 @@ public class AssetTransactionService implements IserviceBase<AssetTransaction> {
 		this.iAssetTransactionRepository = iAssetTransactionRepository;
 	}
 
-	@Override
-	public List<AssetTransaction> findAll() {
-		return iAssetTransactionRepository.findAll();
+	
+	public List<AssetTransaction> findAll(Optional<Integer> assId) {
+		return iAssetTransactionRepository.findAll(assId);
 	}
 
-	@Override
+	
 	public Optional<AssetTransaction> findbyId(int Id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public AssetTransaction getById(int Id) {
 		AssetTransaction assetTransaction;
 		try {
@@ -60,7 +61,7 @@ public class AssetTransactionService implements IserviceBase<AssetTransaction> {
 		return assetTransaction;
 	}
 
-	@Override
+	
 	public void insert(AssetTransaction assetTransaction) {
 		AssetInfo assetInfo=assetInfoService.getById(assetTransaction.getAssId());
 		System.out.println(assetInfo.toString());
@@ -78,13 +79,13 @@ public class AssetTransactionService implements IserviceBase<AssetTransaction> {
 		iAssetTransactionRepository.save(assetTransaction);
 	}
 
-	@Override
+	
 	public AssetTransaction update(AssetTransaction assetTransaction) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public void deleteById(int id) {
 		// TODO Auto-generated method stub
 		

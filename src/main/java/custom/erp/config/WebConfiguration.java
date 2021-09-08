@@ -22,22 +22,15 @@ public class WebConfiguration extends WebMvcConfigurationSupport {
 		matcher.setCaseSensitive(false);
 		configurer.setPathMatcher(matcher);
 	}
+	//	@Override
+	//	public void addInterceptors(InterceptorRegistry registry) {
+	//		registry.addInterceptor(defaultInterceptor);
+	//	}
 	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(defaultInterceptor);
-	}
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/**")
-				.allowedOrigins("*")
-				.allowedHeaders("*")
-				.allowedMethods( "GET",  "DELETE","POST","PUT");
-			}
-		};
-
-
+	public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/api/**")
+		.allowedOrigins("*")
+		.allowedHeaders("*")
+		.allowedMethods( "GET",  "DELETE","POST","PUT");
 	}
 }
