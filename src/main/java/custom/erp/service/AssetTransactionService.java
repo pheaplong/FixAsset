@@ -109,6 +109,7 @@ public class AssetTransactionService {
 	}
 
 	public void insertWithApprove(AssetTransaction assetTransaction){
+
 		AssetTransaction tmp = new AssetTransaction(0, assetTransaction.getAssId(), AssetConstant.ASSET_TRN_TYPE_APPROVE, null, null, null, null, GlobalLibrary.getDateNowFormatted(), "", AssetConstant.ASSET_TRN_STATUS_APPROVED, assetTransaction.getApproveUsr(), null, null, new Date(),assetTransaction.getApproveUsr()	, GlobalLibrary.getDateNowFormatted());
 		iAssetTransactionRepository.save(tmp);
 		
