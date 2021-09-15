@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import custom.erp.entity.DataLookUp;
+import custom.erp.exception.ResourceNotFoundException;
 import custom.erp.repository.IDataLookUpRepository;
 
 @Service
-public class DataLookUpService implements IserviceBase<DataLookUp> {
+public class DataLookUpService{
 
 	private IDataLookUpRepository iDataLookUpRepository;
 
@@ -24,40 +25,38 @@ public class DataLookUpService implements IserviceBase<DataLookUp> {
 		this.iDataLookUpRepository = iDataLookUpRepository;
 	}
 
-	@Override
 	public List<DataLookUp> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return iDataLookUpRepository.findAll();
 	}
 
-	@Override
-	public Optional<DataLookUp> findbyId(int Id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<DataLookUp> findbyId(String Id) {
+		return iDataLookUpRepository.findById(Id);
 	}
 
-	@Override
-	public DataLookUp getById(int Id) {
-		return null;
+	public List<DataLookUp> findbyGroup(String Id) {
+		return iDataLookUpRepository.findByLookupGroup(Id);
 	}
 
 	public DataLookUp getById(String Id) {
-		return iDataLookUpRepository.getById(Id);
+		DataLookUp dataLookUp;
+		try {
+			dataLookUp = iDataLookUpRepository.findById(Id).get();
+		} catch (Exception e) {
+			throw new ResourceNotFoundException();
+		}
+		return dataLookUp;
 	}
 
-	@Override
 	public void insert(DataLookUp t) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public DataLookUp update(DataLookUp t) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void deleteById(int id) {
 		// TODO Auto-generated method stub
 		
