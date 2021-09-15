@@ -14,4 +14,5 @@ public class AssetConstant {
 	//============================================Asset Transaction==============================
 
 	public static final String ASSET_TRN_TYPE_APPROVE ="A03000001";
+	public static final String ASSET_TRN_STATUS_REQUEST ="A02000001";
 }

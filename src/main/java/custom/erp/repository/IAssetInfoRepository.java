@@ -1,7 +1,10 @@
 package custom.erp.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
+import org.hibernate.annotations.Where;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +14,14 @@ import custom.erp.entity.AssetInfo;
 
 public interface IAssetInfoRepository extends JpaRepository<AssetInfo, Integer> {
 
+	@Override
+	@Query(nativeQuery = true,
+	value = "SELECT * FROM HR_ASSET WHERE ASS_STATUS!='A01000002'")
+	List<AssetInfo> findAll();
+	
+	List<AssetInfo> findByAssStatus(String assStatus);
+	
+	
 	@Transactional
 	@Modifying
 	@Query(nativeQuery = true,

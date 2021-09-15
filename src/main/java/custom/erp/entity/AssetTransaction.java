@@ -18,6 +18,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import custom.erp.constant.AssetConstant;
+import custom.erp.exception.BussinessExceptionHandler;
+
 @Entity
 @Table(name = "HR_ASSET_TRN")
 public class AssetTransaction {
@@ -48,7 +51,7 @@ public class AssetTransaction {
 	@Column(name="BASE_DATE") 
 	private String baseDate; 
 
-	@Column(name="TRN_DATE") 
+	@Column(name="TRN_DATE",insertable = false,updatable = false) 
 	private String trnDate; 
 
 	@Column(name="TRN_STATUS") 
@@ -69,9 +72,8 @@ public class AssetTransaction {
 	@Column(name="UPDT_USR") 
 	public String updtUsr; 
 
-	@UpdateTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "UPDT_DT",    columnDefinition = "SYSDATE")
+	@LastModifiedDate
+	@Column(name = "UPDT_DT",insertable = false)
 	public Date updtDt; 
 	
 
@@ -225,7 +227,17 @@ public class AssetTransaction {
 
 	public void setApproveDt(String approveDt) {
 		this.approveDt = approveDt;
+	}
+
+	public void isValid() {
+		// TODO Auto-generated method stub
+		
 	} 
+	
+	public void isInRequestState() {
+		if(!trnStatus.equals(AssetConstant.ASSET_TRN_STATUS_REQUEST))
+			throw new BussinessExceptionHandler("Transaction is not in request state");
+	}
 
 	
 }

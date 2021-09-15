@@ -17,7 +17,7 @@ public class CustomMiddleware extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		response.setHeader("content-range", "0-20/100");
+//		response.setHeader("content-range", "0-20/100");
 		filterChain.doFilter(request, response);
 	}
 	
