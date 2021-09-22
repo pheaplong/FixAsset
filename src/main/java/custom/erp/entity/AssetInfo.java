@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.LastModifiedDate;
+
 import custom.erp.constant.AssetConstant;
 import custom.erp.exception.BussinessExceptionHandler;
 
@@ -125,16 +127,18 @@ public class AssetInfo {
 	@Column(name="ASS_STATUS") 
 	private String assStatus; 
 
-	@Column(name="INS_USR") 
+	@Column(name="INS_USR",updatable = false) 
 	private String insUsr; 
 
-	@Column(name="INS_DT") 
+	@Column(name = "INS_DT",insertable = false,updatable = false)
 	private Date insDt; 
+
 
 	@Column(name="UPDT_USR") 
 	private String updtUsr; 
 
-	@Column(name="UPDT_DT") 
+	@LastModifiedDate
+	@Column(name = "UPDT_DT",insertable = false)
 	private Date updtDt; 
 
 	@Column(name="APPROVE_USR") 
