@@ -1,5 +1,10 @@
 package custom.erp.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +28,9 @@ public class GeneralLedgerService {
 		
 	}
 	
+	public List<GeneralLedger> getGeneralLedger(Optional<Integer> jeId) {
+		if(jeId.isEmpty())
+			return iGeneralLedgerRepo.findAll();
+		return iGeneralLedgerRepo.findByJounalEntry(jeId);
+	}
 }

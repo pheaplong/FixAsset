@@ -10,11 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.data.annotation.LastModifiedDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="GENERAL_LEDGER")
@@ -28,8 +31,8 @@ public class GeneralLedger {
 	@Transient
 	private int jeId; 
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "JE_ID")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "je_id",referencedColumnName = "JE_ID")
 	private JournalEntry journalEntry;
 	
 	@Column(name = "ACCT_CD")

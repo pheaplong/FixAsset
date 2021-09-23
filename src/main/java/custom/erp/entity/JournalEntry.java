@@ -17,6 +17,8 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import custom.erp.exception.BussinessExceptionHandler;
 
 
@@ -66,7 +68,6 @@ public class JournalEntry {
 	private Date approveDt;
 	
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.PERSIST,mappedBy = "journalEntry")
-//	@Transient
 	private List<GeneralLedger> generalLedgers;
 
 	public int getJeId() {

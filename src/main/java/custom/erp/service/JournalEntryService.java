@@ -1,5 +1,12 @@
 package custom.erp.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +30,11 @@ public class JournalEntryService {
 	public void setiJournalEntryRepo(IJournalEntryRepo iJournalEntryRepo) {
 		this.iJournalEntryRepo = iJournalEntryRepo;
 	}
+	
+	@Transactional
+	public List<JournalEntry> getJournalEntry() {
+		return iJournalEntryRepo.findAll();
+	}
 
 	public void insertJE(JournalEntry journalEntry) {
 		journalEntry.setJeId(0);
@@ -33,6 +45,11 @@ public class JournalEntryService {
 //			iGeneralLedgerRepo.save(tmp);
 //		}
 		System.out.println(journalEntry.getJeId());
+	}
+
+	@OneToMany(fetch = FetchType.EAGER)
+	public Optional<JournalEntry> getJournalEntryById(int jeId) {
+		return iJournalEntryRepo.findById(jeId);
 	}
 
 }

@@ -3,9 +3,15 @@ package custom.erp.entity;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="COA")
 public class ChartOfAccount {
 	@Column(name="ACCT_CODE") 
+	@Id
 	private String acctCode; 
 
 	@Column(name="ACCT_NAME") 
